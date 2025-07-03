@@ -48,7 +48,18 @@ public class Televisori extends Prodotto {
 
     @Override
     public String toString() {
-        return super.toString() + ". Dimensione Tv di: " + altezza + larghezza + spessore
+        return super.toString() + ". Dimensione Tv di: " + altezza + "x" + larghezza + "x" + spessore
                 + ". Dotata di intelligenza smart: " + (smart ? "Si" : "No");
+    }
+
+    @Override
+    public double getPrezzoScontato() {
+        double sconto = 0.02;
+        if (!smart) {
+            sconto = 0.10;
+        }
+        double prezzoBase = getPrezzo();
+        double prezzoScontato = prezzoBase - (getPrezzo() * sconto);
+        return Math.round(prezzoScontato * 100) / 100d;
     }
 }

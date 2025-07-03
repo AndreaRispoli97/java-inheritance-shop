@@ -41,4 +41,15 @@ public class Cuffie extends Prodotto {
         return super.toString() + ". Colore del prodotto: " + colore + ". Collegamento Wireless possibile: "
                 + (wireless ? "Si" : "No") + ". Collegamento tramite cavo possibile: " + (cablate ? "Si" : "No");
     }
+
+    @Override
+    public double getPrezzoScontato() {
+        double sconto = 0.02;
+        if (cablate) {
+            sconto = 0.07;
+        }
+        double prezzoBase = getPrezzo();
+        double prezzoScontato = prezzoBase - (getPrezzo() * sconto);
+        return Math.round(prezzoScontato * 100) / 100d;
+    }
 }

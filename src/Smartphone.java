@@ -33,9 +33,21 @@ public class Smartphone extends Prodotto { // sottoclasse che si estende alla su
     }
 
     // metodi
+
     // sovrascriviamo nuovamente aggiungendo anche i dati specifici dello smartphone
     @Override
     public String toString() {
         return super.toString() + ". Codice IMEI: " + imei + ". Memoria dispositivo di: " + memoriaGB + "GB";
+    }
+
+    @Override
+    public double getPrezzoScontato() {
+        double sconto = 0.02;
+        if (memoriaGB < 32) {
+            sconto = 0.05;
+        }
+        double prezzoBase = getPrezzo();
+        double prezzoScontato = prezzoBase - (getPrezzo() * sconto);
+        return Math.round(prezzoScontato * 100) / 100d;
     }
 }

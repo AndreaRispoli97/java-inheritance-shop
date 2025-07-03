@@ -66,6 +66,14 @@ public class Prodotto {
         return cifraArr;
     }
 
+    // metodo bonus
+
+    public double getPrezzoScontato() {
+        double sconto = 0.02;
+        double prezzoScontato = prezzo - (prezzo * sconto);
+        return Math.round(prezzoScontato * 100) / 100d;
+    }
+
     @Override
     public String toString() {
         return "Codice identificativo: " + codice + ", Nome: " + nome + ", Marca: " + marca + ", al prezzo base di: "
