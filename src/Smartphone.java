@@ -42,12 +42,13 @@ public class Smartphone extends Prodotto { // sottoclasse che si estende alla su
 
     @Override
     public double getPrezzoScontato() {
-        double sconto = 0.02;
+
         if (memoriaGB < 32) {
-            sconto = 0.05;
+            double sconto = 0.05;
+            double prezzoBase = getPrezzo();
+            double prezzoScontato = prezzoBase - (getPrezzo() * sconto);
+            return Math.round(prezzoScontato * 100) / 100d;
         }
-        double prezzoBase = getPrezzo();
-        double prezzoScontato = prezzoBase - (getPrezzo() * sconto);
-        return Math.round(prezzoScontato * 100) / 100d;
+        return super.getPrezzoScontato();
     }
 }

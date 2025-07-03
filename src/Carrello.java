@@ -13,6 +13,7 @@ public class Carrello {
         Prodotto[] carrello = new Prodotto[numeroProdotti];// creiamo array della lunghezza che richiede l'acquirente
 
         int prodottiInseriti = 0;// per comparazione
+        double totaleCarrello = 0.0;
 
         while (prodottiInseriti < numeroProdotti) {
             System.out.println("----Inserimento prodotto " + (prodottiInseriti + 1) + " di " + numeroProdotti);
@@ -114,13 +115,33 @@ public class Carrello {
                 System.out.println("Scelta non valida. Riprova.");
             }
         }
+
+        System.out.println("Possiedi una carta fedeltà? (si/no): ");
+        String cartaFedelta = scanner.nextLine().toLowerCase();
+        boolean isCartaFedelta = cartaFedelta.equals("si");
+
         System.out.println("Contenuto Carrello");
         if (prodottiInseriti == 0) {
             System.out.println("Il carrello è vuoto");
         } else {
             for (int i = 0; i < prodottiInseriti; i++) {
-                System.out.println(carrello[i].toString());
+                Prodotto prodotti = carrello[i];
+                System.out.println(prodotti.toString());
+
+                if (isCartaFedelta) {
+                    double prezzoScontato = prodotti.getPrezzoScontato();
+                    double ivaScontato = prezzoScontato * (prodotti.getIva() / 100);
+                    double prezzoFinale = prezzoScontato * ivaScontato;
+                    prezzoFinale = Math.round(prezzoFinale * 100) / 100d;
+                    System.out.println("Prezzo scontato con IVA: €" + prezzoFinale);
+                    totaleCarrello += prezzoFinale;
+                } else {
+                    double prezzoFinaleIva = prodotti.getPrezzoIva();
+                    System.out.println("Prezzo con IVA: €" + prezzoFinaleIva);
+                    totaleCarrello += prezzoFinaleIva;
+                }
             }
+            System.out.println("Totale carrello: €" + (Math.round(totaleCarrello * 100) / 100d));
         }
         scanner.close();
     }

@@ -44,12 +44,12 @@ public class Cuffie extends Prodotto {
 
     @Override
     public double getPrezzoScontato() {
-        double sconto = 0.02;
         if (cablate) {
-            sconto = 0.07;
+            double sconto = 0.07;
+            double prezzoBase = getPrezzo();
+            double prezzoScontato = prezzoBase - (getPrezzo() * sconto);
+            return Math.round(prezzoScontato * 100) / 100d;
         }
-        double prezzoBase = getPrezzo();
-        double prezzoScontato = prezzoBase - (getPrezzo() * sconto);
-        return Math.round(prezzoScontato * 100) / 100d;
+        return super.getPrezzoScontato();
     }
 }
