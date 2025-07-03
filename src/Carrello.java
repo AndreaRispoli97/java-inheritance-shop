@@ -111,8 +111,6 @@ public class Carrello {
                     default:
                         System.out.println("Scelta non valida. Riprova con un altro prodotto.");
                 }
-            } else {
-                System.out.println("Scelta non valida. Riprova.");
             }
         }
 
@@ -131,17 +129,17 @@ public class Carrello {
                 if (isCartaFedelta) {
                     double prezzoScontato = prodotti.getPrezzoScontato();
                     double ivaScontato = prezzoScontato * (prodotti.getIva() / 100);
-                    double prezzoFinale = prezzoScontato * ivaScontato;
+                    double prezzoFinale = prezzoScontato + ivaScontato;
                     prezzoFinale = Math.round(prezzoFinale * 100) / 100d;
-                    System.out.println("Prezzo scontato con IVA: €" + prezzoFinale);
+                    System.out.println("Prezzo scontato con IVA: $" + prezzoFinale);
                     totaleCarrello += prezzoFinale;
                 } else {
                     double prezzoFinaleIva = prodotti.getPrezzoIva();
-                    System.out.println("Prezzo con IVA: €" + prezzoFinaleIva);
+                    System.out.println("Prezzo con IVA: $" + prezzoFinaleIva);
                     totaleCarrello += prezzoFinaleIva;
                 }
             }
-            System.out.println("Totale carrello: €" + (Math.round(totaleCarrello * 100) / 100d));
+            System.out.println("Totale carrello: $" + (Math.round(totaleCarrello * 100) / 100d));
         }
         scanner.close();
     }
