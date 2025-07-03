@@ -1,3 +1,6 @@
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 public class Prodotto {
     // Questa è la superclasse
     // attributi
@@ -5,15 +8,15 @@ public class Prodotto {
     private int codice;
     private String nome;
     private String marca;
-    private double prezzo;
-    private double iva;
+    private BigDecimal prezzo;
+    private BigDecimal iva;
 
     public Prodotto(int codice, String nome, String marca, double prezzo, double iva) {
         this.codice = codice;
         this.nome = nome;
         this.marca = marca;
-        this.prezzo = prezzo;
-        this.iva = iva;
+        this.prezzo = BigDecimal.valueOf(prezzo);
+        this.iva = BigDecimal.valueOf(iva);
     }
 
     // get
@@ -29,11 +32,11 @@ public class Prodotto {
         return marca;
     }
 
-    public double getPrezzo() {
+    public BigDecimal getPrezzo() {
         return prezzo;
     }
 
-    public double getIva() {
+    public BigDecimal getIva() {
         return iva;
     }
 
@@ -48,30 +51,33 @@ public class Prodotto {
 
     public void setPrezzo(double prezzo) {
         if (prezzo >= 0) {
-            this.prezzo = prezzo;
+            this.prezzo = BigDecimal.valueOf(prezzo);
         } else {
             System.out.println("Prezzo non inserito");
         }
     }
 
     public void setIva(double iva) {
-        this.iva = iva;
+        this.iva = BigDecimal.valueOf(iva);
     }
 
     // metodi
 
-    public double getPrezzoIva() {
-        double risultato = prezzo + (prezzo * iva / 100);
-        double cifraArr = Math.round(risultato * 100) / 100d;
-        return cifraArr;
+    public BigDecimal getPrezzoIva() {
+        BigDecimal cento = BigDecimal.valueOf(100);
+        BigDecimal ivaPercentuale = iva.divide(cento, 2, RoundingMode.HALF_UP);
+        BigDecimal soloIva = prezzo.multiply(ivaPercentuale);
+        BigDecimal risultato = prezzo.add(soloIva);
+        return risultato.setScale(2, RoundingMode.HALF_UP);
     }
 
     // metodo bonus
 
-    public double getPrezzoScontato() {
-        double sconto = 0.02;
-        double prezzoScontato = prezzo - (prezzo * sconto);
-        return Math.round(prezzoScontato * 100) / 100d;
+    public BigDecimal getPrezzoScontato() {
+        BigDecimal scontoBase = BigDecimal.valueOf(0.02);
+        BigDecimal unoMenoSconto = BigDecimal.ONE.subtract(scontoBase);
+        BigDecimal prezzoScontato = prezzo.multiply(unoMenoSconto);
+        return prezzoScontato.setScale(2, RoundingMode.HALF_UP);
     }
 
     @Override

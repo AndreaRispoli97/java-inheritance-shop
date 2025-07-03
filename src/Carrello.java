@@ -1,3 +1,5 @@
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Scanner;
 
 public class Carrello {
@@ -13,7 +15,7 @@ public class Carrello {
         Prodotto[] carrello = new Prodotto[numeroProdotti];// creiamo array della lunghezza che richiede l'acquirente
 
         int prodottiInseriti = 0;// per comparazione
-        double totaleCarrello = 0.0;
+        BigDecimal totaleCarrello = BigDecimal.ZERO;
 
         while (prodottiInseriti < numeroProdotti) {
             System.out.println("----Inserimento prodotto " + (prodottiInseriti + 1) + " di " + numeroProdotti);
@@ -127,19 +129,20 @@ public class Carrello {
                 System.out.println(prodotti.toString());
 
                 if (isCartaFedelta) {
-                    double prezzoScontato = prodotti.getPrezzoScontato();
-                    double ivaScontato = prezzoScontato * (prodotti.getIva() / 100);
-                    double prezzoFinale = prezzoScontato + ivaScontato;
-                    prezzoFinale = Math.round(prezzoFinale * 100) / 100d;
+                    BigDecimal prezzoScontato = prodotti.getPrezzoScontato();
+                    BigDecimal ivaScontato = prezzoScontato
+                            .multiply(prodotti.getIva().divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_UP));
+                    BigDecimal prezzoFinale = prezzoScontato.add(ivaScontato).setScale(2, RoundingMode.HALF_UP);
+
                     System.out.println("Prezzo scontato con IVA: $" + prezzoFinale);
-                    totaleCarrello += prezzoFinale;
+                    totaleCarrello = totaleCarrello.add(prezzoFinale);
                 } else {
-                    double prezzoFinaleIva = prodotti.getPrezzoIva();
+                    BigDecimal prezzoFinaleIva = prodotti.getPrezzoIva();
                     System.out.println("Prezzo con IVA: $" + prezzoFinaleIva);
-                    totaleCarrello += prezzoFinaleIva;
+                    totaleCarrello = totaleCarrello.add(prezzoFinaleIva);
                 }
             }
-            System.out.println("Totale carrello: $" + (Math.round(totaleCarrello * 100) / 100d));
+            System.out.println("Totale carrello: $" + totaleCarrello.setScale(2, RoundingMode.HALF_UP));
         }
         scanner.close();
     }

@@ -1,3 +1,6 @@
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 public class Smartphone extends Prodotto { // sottoclasse che si estende alla superclasse
     // attributi
     private String imei;
@@ -41,13 +44,14 @@ public class Smartphone extends Prodotto { // sottoclasse che si estende alla su
     }
 
     @Override
-    public double getPrezzoScontato() {
+    public BigDecimal getPrezzoScontato() {
 
         if (memoriaGB < 32) {
-            double sconto = 0.05;
-            double prezzoBase = getPrezzo();
-            double prezzoScontato = prezzoBase - (getPrezzo() * sconto);
-            return Math.round(prezzoScontato * 100) / 100d;
+            BigDecimal sconto = BigDecimal.valueOf(0.05);
+            BigDecimal prezzoBase = getPrezzo();
+            BigDecimal unoMenoSconto = BigDecimal.ONE.subtract(sconto);
+            BigDecimal prezzoScontato = prezzoBase.multiply(unoMenoSconto);
+            return prezzoScontato.setScale(2, RoundingMode.HALF_UP);
         }
         return super.getPrezzoScontato();
     }

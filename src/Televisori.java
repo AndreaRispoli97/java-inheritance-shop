@@ -1,3 +1,6 @@
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 public class Televisori extends Prodotto {
 
     private float altezza;
@@ -53,13 +56,14 @@ public class Televisori extends Prodotto {
     }
 
     @Override
-    public double getPrezzoScontato() {
+    public BigDecimal getPrezzoScontato() {
 
         if (!smart) {
-            double sconto = 0.10;
-            double prezzoBase = getPrezzo();
-            double prezzoScontato = prezzoBase - (getPrezzo() * sconto);
-            return Math.round(prezzoScontato * 100) / 100d;
+            BigDecimal sconto = BigDecimal.valueOf(0.10);
+            BigDecimal prezzoBase = getPrezzo();
+            BigDecimal unoMenoSconto = BigDecimal.ONE.subtract(sconto);
+            BigDecimal prezzoScontato = prezzoBase.multiply(unoMenoSconto);
+            return prezzoScontato.setScale(2, RoundingMode.HALF_UP);
         }
         return super.getPrezzoScontato();
     }
