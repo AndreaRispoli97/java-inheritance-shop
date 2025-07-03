@@ -75,7 +75,9 @@ public class Prodotto {
 
     public BigDecimal getPrezzoScontato() {
         BigDecimal scontoBase = BigDecimal.valueOf(0.02);
-        BigDecimal unoMenoSconto = BigDecimal.ONE.subtract(scontoBase);
+        BigDecimal unoMenoSconto = BigDecimal.ONE.subtract(scontoBase);// 1- lo sconto, cosi da saltare un operazione e
+                                                                       // fare direttamente poi la
+                                                                       // moltiplicazione(0.02-1=0.98*prezzo)
         BigDecimal prezzoScontato = prezzo.multiply(unoMenoSconto);
         return prezzoScontato.setScale(2, RoundingMode.HALF_UP);
     }
