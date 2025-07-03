@@ -131,7 +131,7 @@ public class Carrello {
                 if (isCartaFedelta) {
                     BigDecimal prezzoScontato = prodotti.getPrezzoScontato();
                     BigDecimal ivaScontato = prezzoScontato
-                            .multiply(prodotti.getIva().divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_UP));
+                            .multiply(prodotti.getIva().divide(new BigDecimal("100"), 2, RoundingMode.HALF_UP));
                     BigDecimal prezzoFinale = prezzoScontato.add(ivaScontato).setScale(2, RoundingMode.HALF_UP);
 
                     System.out.println("Prezzo scontato con IVA: $" + prezzoFinale);

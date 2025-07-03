@@ -15,8 +15,8 @@ public class Prodotto {
         this.codice = codice;
         this.nome = nome;
         this.marca = marca;
-        this.prezzo = BigDecimal.valueOf(prezzo);
-        this.iva = BigDecimal.valueOf(iva);
+        this.prezzo = new BigDecimal(prezzo); // BigDecimal.valueOf(prezzo);
+        this.iva = new BigDecimal(iva);// BigDecimal.valueOf(iva);
     }
 
     // get
@@ -51,20 +51,20 @@ public class Prodotto {
 
     public void setPrezzo(double prezzo) {
         if (prezzo >= 0) {
-            this.prezzo = BigDecimal.valueOf(prezzo);
+            this.prezzo = new BigDecimal(prezzo); // BigDecimal.valueOf(prezzo);
         } else {
             System.out.println("Prezzo non inserito");
         }
     }
 
     public void setIva(double iva) {
-        this.iva = BigDecimal.valueOf(iva);
+        this.iva = new BigDecimal(iva); // BigDecimal.valueOf(iva);
     }
 
     // metodi
 
     public BigDecimal getPrezzoIva() {
-        BigDecimal cento = BigDecimal.valueOf(100);
+        BigDecimal cento = new BigDecimal("100"); // BigDecimal.valueOf(100);
         BigDecimal ivaPercentuale = iva.divide(cento, 2, RoundingMode.HALF_UP);
         BigDecimal soloIva = prezzo.multiply(ivaPercentuale);
         BigDecimal risultato = prezzo.add(soloIva);
@@ -74,7 +74,7 @@ public class Prodotto {
     // metodo bonus
 
     public BigDecimal getPrezzoScontato() {
-        BigDecimal scontoBase = BigDecimal.valueOf(0.02);
+        BigDecimal scontoBase = new BigDecimal("0.02"); // BigDecimal.valueOf(0.02);
         BigDecimal unoMenoSconto = BigDecimal.ONE.subtract(scontoBase);// 1- lo sconto, cosi da saltare un operazione e
                                                                        // fare direttamente poi la
                                                                        // moltiplicazione(0.02-1=0.98*prezzo)

@@ -59,7 +59,7 @@ public class Televisori extends Prodotto {
     public BigDecimal getPrezzoScontato() {
 
         if (!smart) {
-            BigDecimal sconto = BigDecimal.valueOf(0.10);
+            BigDecimal sconto = new BigDecimal("0.10"); // BigDecimal.valueOf(0.10);
             BigDecimal prezzoBase = getPrezzo();
             BigDecimal unoMenoSconto = BigDecimal.ONE.subtract(sconto);
             BigDecimal prezzoScontato = prezzoBase.multiply(unoMenoSconto);

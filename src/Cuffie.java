@@ -48,7 +48,7 @@ public class Cuffie extends Prodotto {
     @Override
     public BigDecimal getPrezzoScontato() {
         if (cablate) {
-            BigDecimal sconto = BigDecimal.valueOf(0.05);
+            BigDecimal sconto = new BigDecimal("0.05"); // BigDecimal.valueOf(0.05);
             BigDecimal prezzoBase = getPrezzo();
             BigDecimal unoMenoSconto = BigDecimal.ONE.subtract(sconto);
             BigDecimal prezzoScontato = prezzoBase.multiply(unoMenoSconto);
